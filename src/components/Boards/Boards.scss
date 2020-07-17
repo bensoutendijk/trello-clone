@@ -1,0 +1,23 @@
+.Boards {
+    height: inherit;
+}
+
+.BoardList {
+    .BoardList-button {
+        display: inline-flex;
+        height: 6em;
+        width: 10em;
+        padding: 0.5em 1em;
+        margin: 0em 0.5em 0.5em 0em;
+    }
+
+    .BoardList-button-new {
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+.BoardView {
+    height: inherit;
+}
+
