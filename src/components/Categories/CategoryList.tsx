@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { Droppable } from 'react-beautiful-dnd';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
@@ -16,14 +17,19 @@ function CategoryList() {
   }
 
   return (
-    <div className="CategoryList">
-      {boardForm.categories.map((id, i) => {
-        return (
-          <CategoryView key={id} categoryid={id} index={i} />
-        );
-      })}
-      <CategoryNew />
-    </div>
+    <Droppable droppableId={params.boardid} direction="horizontal" type="category">
+      {(provided) => (
+        <div className="CategoryList" {...provided.droppableProps} ref={provided.innerRef}>
+          {boardForm.categories.map((id, index) => {
+            return (
+              <CategoryView key={id} categoryid={id} index={index} />
+            );
+          })}
+          {provided.placeholder}
+          <CategoryNew />
+        </div>
+      )}
+    </Droppable>
   );
 }
 

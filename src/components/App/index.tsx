@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 import { fetchUser } from '../../store/auth/actions';
 
@@ -19,9 +18,6 @@ function App() {
 
   const auth = useSelector((state: RootState) => state.auth);
 
-  const onDragEnd = (res: DropResult) => {
-    // TODO update state for reorder
-  };
 
   useEffect(() => {
     const getAuth = async () => {
@@ -36,24 +32,22 @@ function App() {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className="App">
-        <Header />
-        {auth.fetched ? (
-          <Switch>
-            <Route path="/boards" component={Boards} />
-            <Route path="/cards" component={Boards} />
-            <Redirect to="/boards" />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route exact path="/login" component={LogIn} />
-            <Route exact path="/signup" component={SignUp} />
-            <Redirect to="/login" />
-          </Switch>
-        )}
-      </div>
-    </DragDropContext>
+    <div className="App">
+      <Header />
+      {auth.fetched ? (
+        <Switch>
+          <Route path="/boards" component={Boards} />
+          <Route path="/cards" component={Boards} />
+          <Redirect to="/boards" />
+        </Switch>
+      ) : (
+        <Switch>
+          <Route exact path="/login" component={LogIn} />
+          <Route exact path="/signup" component={SignUp} />
+          <Redirect to="/login" />
+        </Switch>
+      )}
+    </div>
   );
 }
 

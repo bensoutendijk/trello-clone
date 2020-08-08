@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import { Droppable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Card from 'react-bootstrap/Card';
 
@@ -48,36 +48,41 @@ const CategoryView: React.FC<CategoryViewProps> = function({ categoryid, index }
   };
 
   return (
-    <div className="CategoryView">
-      <Card
-        bg="light"
-        className="CategoryView-card"
-      >
-        <div className="CategoryHeader">
-          <span className="CategoryTitle">
-            {category?.title}
-          </span>
-          <div className="dropdown">
-            <button id={`delete-category-${categoryid}`} className="btn" onClick={handleToggleDropdown}>
-              <i className="far fa-ellipsis-h"></i>
-            </button>
-            <div className={clsx('dropdown-menu', { show: state.dropdown })}>
-              <button className="dropdown-item" onClick={handleDeleteCategory}>Delete</button>
-            </div>
-          </div>
-        </div>
-        <Card.Body>
-          <Droppable droppableId={categoryid}>
-            {(provided) => (
-              <div className="CardList" {...provided.droppableProps} ref={provided.innerRef}>
-                {categoryCards.map((id, index) => <CardView key={id} cardid={id} index={index} />)}
+    <Draggable draggableId={categoryid} index={index}>
+      {(provided) => (
+        <div className="CategoryView" {...provided.draggableProps} ref={provided.innerRef}>
+          <Card
+            bg="light"
+            className="CategoryView-card"
+          >
+            <div className="CategoryHeader"  {...provided.dragHandleProps}>
+              <span className="CategoryTitle">
+                {category?.title}
+              </span>
+              <div className="dropdown">
+                <button id={`delete-category-${categoryid}`} className="btn" onClick={handleToggleDropdown}>
+                  <i className="far fa-ellipsis-h"></i>
+                </button>
+                <div className={clsx('dropdown-menu', { show: state.dropdown })}>
+                  <button className="dropdown-item" onClick={handleDeleteCategory}>Delete</button>
+                </div>
               </div>
-            )}
-          </Droppable>
-          <CardNew categoryid={categoryid} />
-        </Card.Body>
-      </Card>
-    </div>
+            </div>
+            <Card.Body>
+              <Droppable droppableId={categoryid} type="card">
+                {(provided) => (
+                  <div className="CardList" {...provided.droppableProps} ref={provided.innerRef}>
+                    {categoryCards.map((id, index) => <CardView key={id} cardid={id} index={index} />)}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+              <CardNew categoryid={categoryid} />
+            </Card.Body>
+          </Card>
+        </div>
+      )}
+    </Draggable>
   );
 };
 
