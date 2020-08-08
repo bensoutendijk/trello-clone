@@ -68,7 +68,8 @@ function BoardView() {
           }),
         };
 
-        updateBoard(boardForm);
+        dispatch(updateBoardForm(boardForm));
+        dispatch(updateBoard(boardForm));
         break;
       case 'card':
         break;
