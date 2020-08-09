@@ -1,0 +1,3 @@
+/*           /index.html                                          200
+/assets/*    /assets/:splat                                       200
+/api/*       https://soutendijk-billboard.herokuapp.com/:splat    200
