@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { createCategory } from '../../store/categories/actions';
+import { createCategory, updateCategoryForm } from '../../store/categories/actions';
 import { RootState } from '../../store';
 
 function CategoryNew() {
@@ -31,7 +31,8 @@ function CategoryNew() {
     e.preventDefault();
 
     dispatch(createCategory(categoryForm));
-    setOpen(false);
+    setOpen(true); // Keep the form open for successive creation
+    setTitle('');
   };
 
   return (
@@ -68,7 +69,7 @@ function CategoryNew() {
           <button
             className="CategoryNew-btn btn"
             onClick={() => setOpen(true)}>
-            <i className="fa far fa-plus" />{' Add new category'}
+            <i className="fa far fa-plus" />&nbsp;<span>Add new category</span>
           </button>
         )}
       </Card>

@@ -35,6 +35,7 @@ export default createReducer(initialState, (builder: ActionReducerMapBuilder<Cat
       state.fetching = false;
       state.fetched = true;
       state.byId[action.payload._id] = action.payload;
+      state.form[action.payload._id] = action.payload;
       state.allIds.push(action.payload._id);
     });
   builder

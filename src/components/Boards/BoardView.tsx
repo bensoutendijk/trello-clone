@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import update from 'immutability-helper';
 
@@ -27,6 +27,8 @@ function BoardView() {
   const cards = useSelector((state: RootState) => state.cards);
   const categories = useSelector((state: RootState) => state.categories);
 
+  const board = boards.byId[params.boardid];
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,8 +41,6 @@ function BoardView() {
 
 
   const onDragEnd = (res: DropResult) => {
-    const board = boards.byId[params.boardid];
-
     if (!board || !res.destination) {
       return;
     }
@@ -118,8 +118,6 @@ function BoardView() {
   };
 
   const handleChange = function(event: React.ChangeEvent<HTMLInputElement>): void {
-    const board = boards.byId[params.boardid];
-
     if (typeof board === 'undefined') {
       return;
     }
@@ -145,8 +143,6 @@ function BoardView() {
   };
 
   const submitForm = function() {
-    const board = boards.byId[params.boardid];
-
     if (typeof board === 'undefined') {
       return;
     }
@@ -160,8 +156,6 @@ function BoardView() {
 
     setFormOpen(false);
   };
-
-  const board = boards.byId[params.boardid];
 
   if (typeof board === 'undefined') {
     return null;
@@ -197,7 +191,11 @@ function BoardView() {
             />
           )}
         </Navbar>
-        <CategoryList />
+        <Droppable droppableId={params.boardid} direction="horizontal" type="category">
+          {(provided) => (
+            <CategoryList boardid={params.boardid} {...provided.droppableProps} placeholder={provided.placeholder} innerRef={provided.innerRef} />
+          )}
+        </Droppable>
       </div>
     </DragDropContext>
   );

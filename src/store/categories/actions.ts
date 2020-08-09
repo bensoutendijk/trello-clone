@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { createAction } from '@reduxjs/toolkit';
 
-import { 
+import {
   Category,
   CategoriesError,
   CategoryForm,
@@ -61,6 +61,7 @@ export const deleteCategory = (
   categoryid: string,
 ) => async (dispatch: AppDispatch): Promise<void> => {
   dispatch(removeCategoryPending());
+  dispatch(postBoardPending());
   try {
     const { data } = await axios.delete(`/api/categories/${categoryid}`);
     dispatch(removeCategorySuccess(data.category));

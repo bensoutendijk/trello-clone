@@ -35,6 +35,7 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
 
   const handleKeyPress = function(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
       submitForm();
     }
   };
@@ -48,7 +49,7 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
     };
 
     dispatch(createCard(cardForm));
-    setOpen(false);
+    setOpen(true); // Keep the form open for successive creation
     setTitle('');
   };
 
