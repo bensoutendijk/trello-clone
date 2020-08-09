@@ -8,7 +8,6 @@ import {
   CardForm,
 } from './types';
 import { AppDispatch } from '..';
-import { postBoardSuccess } from '../boards/actions';
 import { postCategorySuccess } from '../categories/actions';
 
 export const createCardPending = createAction('CREATE_CARD_PENDING');

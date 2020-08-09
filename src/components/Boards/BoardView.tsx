@@ -15,7 +15,6 @@ import { updateBoard, updateBoardForm, fetchBoard } from '../../store/boards/act
 import CategoryList from '../Categories/CategoryList';
 import { BoardForm } from '../../store/boards/types';
 import { updateCard } from '../../store/cards/actions';
-import { CategoryForm } from '../../store/categories/types';
 import { updateCategoryForm, updateCategory } from '../../store/categories/actions';
 
 function BoardView() {

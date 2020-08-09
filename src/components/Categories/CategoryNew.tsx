@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { createCategory, updateCategoryForm } from '../../store/categories/actions';
+import { createCategory } from '../../store/categories/actions';
 import { RootState } from '../../store';
 
 function CategoryNew() {

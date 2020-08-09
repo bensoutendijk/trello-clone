@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -13,8 +12,6 @@ import CardList from '../Cards/CardList';
 import CardNew from '../Cards/CardNew';
 
 const CategoryView: React.FC<CategoryViewProps> = function({ categoryid, index }) {
-  const params: { boardid: string } = useParams();
-
   const [state, setState] = useState<CategoryViewState>({});
   const categories = useSelector((state: RootState) => state.categories);
   const category = categories.byId[categoryid];
