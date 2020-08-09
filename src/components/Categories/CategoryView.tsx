@@ -7,16 +7,10 @@ import Card from 'react-bootstrap/Card';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-
-import CardView from '../Cards/CardView';
-import CardNew from '../Cards/CardNew';
 import { deleteCategory } from '../../store/categories/actions';
 
-interface DragItem {
-  index: number;
-  id: string;
-  type: string;
-}
+import CardList from '../Cards/CardList';
+import CardNew from '../Cards/CardNew';
 
 const CategoryView: React.FC<CategoryViewProps> = function({ categoryid, index }) {
   const params: { boardid: string } = useParams();
@@ -49,6 +43,10 @@ const CategoryView: React.FC<CategoryViewProps> = function({ categoryid, index }
     dispatch(deleteCategory(category._id));
   };
 
+  if (!categoryForm) {
+    return null;
+  }
+
   return (
     <Draggable draggableId={categoryid} index={index}>
       {(provided) => (
@@ -73,10 +71,7 @@ const CategoryView: React.FC<CategoryViewProps> = function({ categoryid, index }
             <Card.Body>
               <Droppable droppableId={categoryid} type="card">
                 {(provided) => (
-                  <div className="CardList" {...provided.droppableProps} ref={provided.innerRef}>
-                    {categoryForm?.cards.map((id, index) => <CardView key={id} cardid={id} index={index} />)}
-                    {provided.placeholder}
-                  </div>
+                  <CardList cards={categoryForm.cards} innerRef={provided.innerRef} placeholder={provided.placeholder} {...provided.droppableProps} />
                 )}
               </Droppable>
               <CardNew categoryid={categoryid} />

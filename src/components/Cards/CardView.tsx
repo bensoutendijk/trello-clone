@@ -139,17 +139,15 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid, index }) {
           )}
           <Card className="CardView-card" bg="light">
             <Card.Body>
-              <div>
+              <span>
                 {card?.title}
-              </div>
-              <div>
-                <button
-                  type="button"
-                  className="CardEdit-btn btn btn-sm"
-                  onClick={handleOpen}
-                  children={<i className="fa fal fa-pencil fa-sm" />}
-                />
-              </div>
+              </span>
+              <button
+                type="button"
+                className="CardEdit-btn btn btn-sm"
+                onClick={handleOpen}
+                children={<i className="fa fal fa-pencil fa-sm" />}
+              />
             </Card.Body>
           </Card>
         </div>

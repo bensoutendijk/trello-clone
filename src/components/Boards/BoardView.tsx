@@ -49,14 +49,6 @@ function BoardView() {
       const originIndex = board.categories.indexOf(res.draggableId);
       const destinationIndex = res.destination.index;
 
-      // console.log(board.categories);
-      // console.log(update(board.categories, {
-      //   $splice: [
-      //     [originIndex, 1],
-      //     [destinationIndex, 0, res.draggableId],
-      //   ],
-      // }));
-
       const boardForm: BoardForm = {
         ...board,
         categories: update(board.categories, {
@@ -91,8 +83,6 @@ function BoardView() {
           }),
         };
 
-        console.log(sourceCategory.cards.map(id => cards.byId[id]?.title));
-
         dispatch(updateCategoryForm(sourceCategory));
         dispatch(updateCategory(sourceCategory));
       } else {
@@ -113,9 +103,6 @@ function BoardView() {
             ],
           }),
         };
-
-        console.log(sourceCategory.cards.map(id => cards.byId[id]?.title));
-        console.log(destinationCategory.cards.map(id => cards.byId[id]?.title));
 
         dispatch(updateCategoryForm(sourceCategory));
         dispatch(updateCategoryForm(destinationCategory));

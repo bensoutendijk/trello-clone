@@ -95,7 +95,7 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
           <button
             className="CardNew-btn btn text-left"
             onClick={handleOpen}>
-            <i className="fa far fa-plus" />{' Add a card'}
+            <i className="fa far fa-plus" />&nbsp;<span>Add a card</span>
           </button>
         )}
       </Card>
