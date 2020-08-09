@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -18,11 +19,12 @@ interface DragItem {
 }
 
 const CategoryView: React.FC<CategoryViewProps> = function({ categoryid, index }) {
+  const params: { boardid: string } = useParams();
+
   const [state, setState] = useState<CategoryViewState>({});
   const categories = useSelector((state: RootState) => state.categories);
-  const cards = useSelector((state: RootState) => state.cards);
   const category = categories.byId[categoryid];
-  const categoryCards = cards.allIds.filter((id) => cards.byId[id]?.categoryid === category?._id);
+  const categoryForm = categories.form[categoryid];
 
   const dispatch = useDispatch();
 
@@ -72,7 +74,7 @@ const CategoryView: React.FC<CategoryViewProps> = function({ categoryid, index }
               <Droppable droppableId={categoryid} type="card">
                 {(provided) => (
                   <div className="CardList" {...provided.droppableProps} ref={provided.innerRef}>
-                    {categoryCards.map((id, index) => <CardView key={id} cardid={id} index={index} />)}
+                    {categoryForm?.cards.map((id, index) => <CardView key={id} cardid={id} index={index} />)}
                     {provided.placeholder}
                   </div>
                 )}

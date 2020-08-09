@@ -15,11 +15,12 @@ export type CategoriesError = string;
 
 export interface Category {
   _id: string;
-  boardid: string;
   title: string;
+  cards: string[];
   createdOn: Date;
   updatedOn: Date;
+  boardid: string;
   archived: boolean;
 }
 
-export type CategoryForm = Pick<Category, '_id' | 'title' >;
+export type CategoryForm = Pick<Category, '_id' | 'title' | 'cards' >;
