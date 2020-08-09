@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+
+import update from 'immutability-helper';
 
 import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
@@ -10,6 +13,10 @@ import { RootState } from '../../store';
 import { updateBoard, updateBoardForm, fetchBoard } from '../../store/boards/actions';
 
 import CategoryList from '../Categories/CategoryList';
+import { BoardForm } from '../../store/boards/types';
+import { updateCard } from '../../store/cards/actions';
+import { CategoryForm } from '../../store/categories/types';
+import { updateCategoryForm, updateCategory } from '../../store/categories/actions';
 
 function BoardView() {
   const params: { boardid: string } = useParams();
@@ -17,9 +24,8 @@ function BoardView() {
   const [formOpen, setFormOpen] = useState(false);
 
   const boards = useSelector((state: RootState) => state.boards);
-  const board = boards.byId[params.boardid];
   const cards = useSelector((state: RootState) => state.cards);
-
+  const categories = useSelector((state: RootState) => state.categories);
 
   const dispatch = useDispatch();
 
@@ -31,7 +37,89 @@ function BoardView() {
     getBoard();
   }, [dispatch, params.boardid]);
 
+
+  const onDragEnd = (res: DropResult) => {
+    const board = boards.byId[params.boardid];
+
+    if (!board || !res.destination) {
+      return;
+    }
+
+    if (res.type === 'category') {
+      const originIndex = board.categories.indexOf(res.draggableId);
+      const destinationIndex = res.destination.index;
+
+      const boardForm: BoardForm = {
+        ...board,
+        categories: update(board.categories, {
+          $splice: [
+            [originIndex, 1],
+            [destinationIndex, 0, res.draggableId],
+          ],
+        }),
+      };
+
+      dispatch(updateBoardForm(boardForm));
+      dispatch(updateBoard(boardForm));
+    }
+
+    if (res.type === 'card') {
+      const card = cards.byId[res.draggableId];
+      let sourceCategory = categories.byId[res.source.droppableId];
+      let destinationCategory = categories.byId[res.destination.droppableId];
+
+      if (!card || !sourceCategory || !destinationCategory) {
+        return;
+      }
+
+      if (sourceCategory === destinationCategory) { // Same source and destination category
+        sourceCategory = {
+          ...sourceCategory,
+          cards: update(sourceCategory.cards, {
+            $splice: [
+              [res.source.index, 1],
+              [res.destination.index, 0, res.draggableId],
+            ],
+          }),
+        };
+
+        dispatch(updateCategoryForm(sourceCategory));
+        dispatch(updateCategory(sourceCategory));
+      } else {
+        sourceCategory = {
+          ...sourceCategory,
+          cards: update(sourceCategory.cards, {
+            $splice: [
+              [res.source.index, 1],
+            ],
+          }),
+        };
+
+        destinationCategory = {
+          ...destinationCategory,
+          cards: update(destinationCategory.cards, {
+            $splice: [
+              [res.destination.index, 0, res.draggableId],
+            ],
+          }),
+        };
+
+        dispatch(updateCategoryForm(sourceCategory));
+        dispatch(updateCategoryForm(destinationCategory));
+        dispatch(updateCategory(sourceCategory));
+        dispatch(updateCategory(destinationCategory));
+      }
+
+      dispatch(updateCard({
+        ...card,
+        categoryid: res.destination.droppableId,
+      }));
+    }
+  };
+
   const handleChange = function(event: React.ChangeEvent<HTMLInputElement>): void {
+    const board = boards.byId[params.boardid];
+
     if (typeof board === 'undefined') {
       return;
     }
@@ -57,6 +145,8 @@ function BoardView() {
   };
 
   const submitForm = function() {
+    const board = boards.byId[params.boardid];
+
     if (typeof board === 'undefined') {
       return;
     }
@@ -71,6 +161,8 @@ function BoardView() {
     setFormOpen(false);
   };
 
+  const board = boards.byId[params.boardid];
+
   if (typeof board === 'undefined') {
     return null;
   }
@@ -80,32 +172,34 @@ function BoardView() {
   }
 
   return (
-    <div className="BoardView">
-      <Navbar variant="dark">
-        {formOpen ? (
-          <Form onSubmit={handleSubmit} className="BoardView-titleForm">
-            <Form.Control
-              autoFocus
-              name="title"
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className="BoardView">
+        <Navbar variant="dark">
+          {formOpen ? (
+            <Form onSubmit={handleSubmit} className="BoardView-titleForm">
+              <Form.Control
+                autoFocus
+                name="title"
+                size="lg"
+                value={boards.form[board._id]!.title}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Form>
+          ) : (
+            <Button
+              className="BoardView-titleForm"
+              variant="outline-dark"
               size="lg"
-              value={boards.form[board._id]!.title}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              style={{ color: 'white', fontWeight: 700 }}
+              onClick={() => setFormOpen(true)}
+              children={boards.form[board._id]!.title}
             />
-          </Form>
-        ) : (
-          <Button
-            className="BoardView-titleForm"
-            variant="outline-dark"
-            size="lg"
-            style={{ color: 'white', fontWeight: 700 }}
-            onClick={() => setFormOpen(true)}
-            children={boards.form[board._id]!.title}
-          />
-        )}
-      </Navbar>
-      <CategoryList />
-    </div>
+          )}
+        </Navbar>
+        <CategoryList />
+      </div>
+    </DragDropContext>
   );
 }
 

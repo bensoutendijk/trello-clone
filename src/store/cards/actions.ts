@@ -2,12 +2,14 @@ import axios from 'axios';
 
 import { createAction } from '@reduxjs/toolkit';
 
-import { 
+import {
   Card,
   CardsError,
   CardForm,
 } from './types';
 import { AppDispatch } from '..';
+import { postBoardSuccess } from '../boards/actions';
+import { postCategorySuccess } from '../categories/actions';
 
 export const createCardPending = createAction('CREATE_CARD_PENDING');
 export const createCardSuccess = createAction<Card>('CREATE_CARD_SUCCESS');
@@ -38,7 +40,8 @@ export const createCard = (
   try {
     if (!formData) throw new Error('No form data prodived');
     const { data } = await axios.post('/api/cards', formData);
-    dispatch(createCardSuccess(data));
+    dispatch(createCardSuccess(data.card));
+    dispatch(postCategorySuccess(data.category));
   } catch (error) {
     dispatch(createCardFailed(error.message));
   }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { fetchUser } from '../../store/auth/actions';
 
 import Header from '../Header';
@@ -16,6 +17,7 @@ function App() {
   const dispatch = useDispatch();
 
   const auth = useSelector((state: RootState) => state.auth);
+
 
   useEffect(() => {
     const getAuth = async () => {

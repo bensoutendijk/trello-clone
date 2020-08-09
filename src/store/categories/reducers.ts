@@ -1,14 +1,14 @@
 import { createReducer, ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { CategoriesState } from './types';
-import { 
-  createCategoryPending, 
-  createCategorySuccess, 
-  createCategoryFailed, 
-  postCategoryPending, 
-  postCategorySuccess, 
-  postCategoryFailed, 
-  removeCategoryPending, 
-  removeCategorySuccess, 
+import {
+  createCategoryPending,
+  createCategorySuccess,
+  createCategoryFailed,
+  postCategoryPending,
+  postCategorySuccess,
+  postCategoryFailed,
+  removeCategoryPending,
+  removeCategorySuccess,
   removeCategoryFailed,
   updateCategoryForm,
   receiveCategories,
@@ -48,6 +48,7 @@ export default createReducer(initialState, (builder: ActionReducerMapBuilder<Cat
       state.fetching = false;
       state.fetched = true;
       state.byId = mapToKey(action.payload, '_id');
+      state.form = mapToKey(action.payload, '_id');
       state.allIds = getUniqueValues(action.payload, '_id');
     });
   builder
@@ -65,6 +66,7 @@ export default createReducer(initialState, (builder: ActionReducerMapBuilder<Cat
       state.fetching = false;
       state.fetched = true;
       state.byId[action.payload._id] = action.payload;
+      state.form[action.payload._id] = action.payload;
     });
   builder
     .addCase(postCategoryFailed, (state, action) => {

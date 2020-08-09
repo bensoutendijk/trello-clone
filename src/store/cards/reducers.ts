@@ -1,14 +1,14 @@
 import { createReducer, ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { CardsState } from './types';
-import { 
-  createCardPending, 
-  createCardSuccess, 
-  createCardFailed, 
-  postCardPending, 
-  postCardSuccess, 
-  postCardFailed, 
-  removeCardPending, 
-  removeCardSuccess, 
+import {
+  createCardPending,
+  createCardSuccess,
+  createCardFailed,
+  postCardPending,
+  postCardSuccess,
+  postCardFailed,
+  removeCardPending,
+  removeCardSuccess,
   removeCardFailed,
   updateCardForm,
   receiveCards,

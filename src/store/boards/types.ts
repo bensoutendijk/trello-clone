@@ -22,12 +22,11 @@ export interface Board {
   title: string;
   createdOn: Date;
   updatedOn: Date;
-  members: { 
-    id: string; 
+  members: {
+    id: string;
     scopes: string[];
   }[];
   categories: string[];
-  cards: string[];
   archived: boolean;
 }
 
@@ -37,4 +36,4 @@ export interface BoardComplete {
   cards: Card[];
 }
 
-export type BoardForm = Pick<Board, '_id' | 'title' | 'categories' >;
+export type BoardForm = Pick<Board, '_id' | 'title' | 'categories'>;

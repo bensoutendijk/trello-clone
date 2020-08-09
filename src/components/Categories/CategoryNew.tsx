@@ -21,9 +21,10 @@ function CategoryNew() {
   }
 
   const categoryForm = {
+    title,
+    cards: [],
     boardid,
     index: board.categories.length,
-    title,
   };
 
   const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {

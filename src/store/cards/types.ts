@@ -23,4 +23,4 @@ export interface Card {
   archived: boolean;
 }
 
-export type CardForm = Pick<Card, '_id' | 'title' >;
+export type CardForm = Pick<Card, '_id' | 'title' | 'categoryid' >;

@@ -1,12 +1,18 @@
+.CardList {
+  min-height: 1px;
+}
+
 .CardView {
+  margin-bottom: 0.25em;
   .CardView-card {
-    margin-bottom: 0.25em;
     .card-body {
       display: flex;
       justify-content: space-between;
-      padding: 0.5em;
+      align-items: center;
+      padding: 0.1em 0.2em 0.1em 0.2em;
 
       .CardEdit-btn {
+        align-self: baseline;
         color: black;
         &:hover {
           background-color: rgba(0, 0, 0, 0.1);

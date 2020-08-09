@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -7,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import { updateCardForm, updateCard, deleteCard } from '../../store/cards/actions';
 
-const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
+const CardView: React.FC<CategoryViewProps> = function({ cardid, index }) {
   const [open, setOpen] = useState(false);
   const cardRef = useRef(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -90,66 +91,68 @@ const CardView: React.FC<CategoryViewProps> = function({ cardid }) {
   },[open]);
 
   return (
-    <div className="CardView">
-      {open ? (
-        <Card className="CardEdit-card" ref={cardRef}>
-          <Form className="CardEdit-card-form" onSubmit={handleSubmit}>
+    <Draggable draggableId={cardid} index={index}>
+      {(provided) => (
+        <div className="CardView" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+          {open ? (
+            <Card className="CardEdit-card" ref={cardRef}>
+              <Form className="CardEdit-card-form" onSubmit={handleSubmit}>
+                <Card.Body>
+                  <Form.Control
+                    ref={inputRef}
+                    autoFocus
+                    as="textarea"
+                    rows={4}
+                    style={{ resize: 'none' }}
+                    name="title"
+                    value={cardForm?.title}
+                    onChange={handleChange}
+                    onKeyPress={handleKeyPress}
+                  />
+                </Card.Body>
+                <div className="mt-2">
+                  <button
+                    type="submit"
+                    className="btn btn-success"
+                    children="Save"
+                  />
+                </div>
+              </Form>
+              <div className="CardEdit-card-quicktools">
+                <button
+                  className="btn btn-dark"
+                  children="Edit labels"
+                />
+                <button
+                  className="btn btn-dark"
+                  children="Copy"
+                />
+                <button
+                  className="btn btn-dark"
+                  children="Archive"
+                  onClick={handleDelete}
+                />
+              </div>
+            </Card>
+          ) : (
+            null
+          )}
+          <Card className="CardView-card" bg="light">
             <Card.Body>
-              <Form.Control
-                ref={inputRef}
-                autoFocus
-                as="textarea"
-                rows={4}
-                style={{ resize: 'none' }}
-                name="title"
-                value={cardForm?.title}
-                onChange={handleChange}
-                onKeyPress={handleKeyPress}
+              <span>
+                {card?.title}
+              </span>
+              <button
+                type="button"
+                className="CardEdit-btn btn btn-sm"
+                onClick={handleOpen}
+                children={<i className="fa fal fa-pencil fa-sm" />}
               />
             </Card.Body>
-            <div className="mt-2">
-              <button
-                type="submit"
-                className="btn btn-success"
-                children="Save"
-              />
-            </div>
-          </Form>
-          <div className="CardEdit-card-quicktools">
-            <button
-              className="btn btn-dark"
-              children="Edit labels"
-            />
-            <button
-              className="btn btn-dark"
-              children="Copy"
-            />
-            <button
-              className="btn btn-dark"
-              children="Archive"
-              onClick={handleDelete}
-            />
-          </div>
-        </Card>
-      ) : (
-        null
+          </Card>
+        </div>
       )}
-      <Card className="CardView-card" bg="light">
-        <Card.Body>
-          <div>
-            {card?.title}
-          </div>
-          <div>
-            <button
-              type="button"
-              className="CardEdit-btn btn btn-sm"
-              onClick={handleOpen}
-              children={<i className="fa fal fa-pencil fa-sm" />}
-            />
-          </div>
-        </Card.Body>
-      </Card>
-    </div>
+    </Draggable>
   );
 };
 
@@ -157,4 +160,5 @@ export default CardView;
 
 export interface CategoryViewProps {
   cardid: string;
+  index: number;
 }

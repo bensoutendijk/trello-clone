@@ -27,6 +27,7 @@ function BoardNew() {
       _id: '*',
       title,
       categories: [],
+      cards: [],
     };
 
     dispatch(createBoard(boardForm));
