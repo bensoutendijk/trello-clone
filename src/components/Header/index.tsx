@@ -11,7 +11,7 @@ function Header() {
     <header className="Header">
       <Navbar className="Header-navbar" bg="dark" variant="dark" expand="lg">
         <Link to="/">
-          <Navbar.Brand>React-Starter</Navbar.Brand>
+          <Navbar.Brand>Kanban</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
