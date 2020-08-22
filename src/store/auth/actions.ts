@@ -32,7 +32,7 @@ export const createUser = (
     const { data } = await axios.post('/api/auth/local', formData);
     dispatch(createUserSuccess(data));
   } catch (error) {
-    dispatch(createUserFailed(error.message));
+    dispatch(createUserFailed(error.response.data));
   }
 };
 

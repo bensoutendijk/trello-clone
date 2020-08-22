@@ -36,6 +36,13 @@ function SignUp() {
   return (
     <div className="SignUp">
       <Jumbotron className="bg-dark text-light">
+        {auth?.error?.authentication ? (
+          <div className="alert alert-danger" role="alert">
+            {auth?.error?.authentication}
+          </div>
+        ) : (
+          null
+        )}
         <h1>Sign Up</h1>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
@@ -46,7 +53,15 @@ function SignUp() {
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
+              isInvalid={!!auth?.error?.email}
             />
+            {auth?.error?.email ? (
+              <Form.Text className="text-danger">
+                Email {auth.error.email}
+              </Form.Text>
+            ) : (
+              null
+            )}
           </Form.Group>
           <Form.Group>
             <Form.Label>Password</Form.Label>
@@ -56,7 +71,15 @@ function SignUp() {
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
+              isInvalid={!!auth?.error?.password}
             />
+            {auth?.error?.password ? (
+              <Form.Text className="text-danger">
+                Password {auth.error.password}
+              </Form.Text>
+            ) : (
+              null
+            )}
           </Form.Group>
           <Form.Group>
             <Form.Label>Confirm Password</Form.Label>
@@ -66,7 +89,15 @@ function SignUp() {
               placeholder="Confirm Password"
               onChange={(e) => setPasswordConfirmation(e.target.value)}
               value={passwordConfirmation}
+              isInvalid={!!auth?.error?.passwordConfirmation}
             />
+            {auth?.error?.passwordConfirmation ? (
+              <Form.Text className="text-danger">
+                Password {auth.error.passwordConfirmation}
+              </Form.Text>
+            ) : (
+              null
+            )}
           </Form.Group>
           <Button variant="primary" type="submit">
             Sign Up

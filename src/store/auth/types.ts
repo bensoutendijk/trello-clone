@@ -5,6 +5,7 @@ export const REJECT_AUTH = 'REJECT_AUTH';
 export type AuthError = {
   email?: string;
   password?: string;
+  passwordConfirmation?: string;
   authentication?: string;
 };
 
