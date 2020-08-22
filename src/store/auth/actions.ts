@@ -32,7 +32,7 @@ export const createUser = (
     const { data } = await axios.post('/api/auth/local', formData);
     dispatch(createUserSuccess(data));
   } catch (error) {
-    dispatch(createUserFailed(error.message));
+    dispatch(createUserFailed(error.response.data));
   }
 };
 
@@ -55,6 +55,6 @@ export const login = (
     const { data } = await axios.post('/api/auth/local/login', formData);
     dispatch(loginUserSuccess(data));
   } catch (error) {
-    dispatch(loginUserFailed(error.message));
+    dispatch(loginUserFailed(error.response.data));
   }
 };

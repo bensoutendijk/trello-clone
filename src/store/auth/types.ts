@@ -1,16 +1,22 @@
 export const REQUEST_AUTH = 'REQUEST_AUTH';
 export const RECIEVE_AUTH = 'RECIEVE_AUTH';
-export const REJECT_AUTH = 'REJECT_AUTH'
+export const REJECT_AUTH = 'REJECT_AUTH';
 
-export type AuthError = 'not authenticated' | 'not authorized'
-export type AuthPermission = 'admin' | 'tester' | 'default'
-export type AuthService = 'mixer' | 'twitch' | 'instagram' | 'facebook' | 'twitter'
+export type AuthError = {
+  email?: string;
+  password?: string;
+  passwordConfirmation?: string;
+  authentication?: string;
+};
+
+export type AuthPermission = 'admin' | 'tester' | 'default';
+export type AuthService = 'mixer' | 'twitch' | 'instagram' | 'facebook' | 'twitter';
 
 export interface UsersState {
   fetched: boolean;
   fetching: boolean;
   data?: LocalUser;
-  error?: AuthError
+  error?: AuthError;
 }
 
 export interface LocalUser {
@@ -37,11 +43,11 @@ interface RecieveAuth {
 
 interface RejectAuth {
   type: typeof REJECT_AUTH;
-  payload: AuthError
+  payload: AuthError;
 }
 
 export type AuthActionTypes = (
   RequestAuth |
   RecieveAuth |
   RejectAuth
-)
+);
