@@ -58,12 +58,28 @@ const CardNew: React.FC<CardNewProps> = function({ categoryid }) {
     submitForm();
   };
 
+  const onBlurForm = function(e: React.FocusEvent) {
+    const form = e.currentTarget;
+    const isFocusLost = () => {
+      for (const element of form.children) {
+        if (element === e.relatedTarget) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    if (isFocusLost()) {
+      setOpen(false);
+    }
+  };
+
   return (
     <div className="CardNew">
       <Card bg={open ? 'light' : undefined }>
         {open ? (
           <Card.Body>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} onBlur={onBlurForm}>
               <Form.Group>
                 <Form.Control
                   autoFocus

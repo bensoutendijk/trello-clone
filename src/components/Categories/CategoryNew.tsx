@@ -35,12 +35,29 @@ function CategoryNew() {
     setTitle('');
   };
 
+  const onBlurForm = function(e: React.FocusEvent) {
+    const form = e.currentTarget;
+    const isFocusLost = () => {
+      for (const element of form.children) {
+        console.log(element);
+        if (element === e.relatedTarget) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    if (isFocusLost()) {
+      setOpen(false);
+    }
+  };
+
   return (
     <div className="CategoryNew">
       <Card bg={open ? 'light' : undefined }>
         {open ? (
           <Card.Body>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} onBlur={onBlurForm}>
               <Form.Group>
                 <Form.Control
                   autoFocus
