@@ -4,9 +4,22 @@ import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store';
+import { logoutUser } from '../../store/auth/actions';
+
 import './Header.scss';
 
 function Header() {
+  const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.auth);
+
+  const logout = (e: React.MouseEvent) => {
+    e.preventDefault();
+    document.cookie = 'token=;';
+    dispatch(logoutUser());
+  };
+
   return (
     <header className="Header">
       <Navbar className="Header-navbar" bg="dark" variant="dark" expand="lg">
@@ -20,14 +33,22 @@ function Header() {
               Boards
             </Link>
           </Nav>
-          <Nav className="ml-auto">
-            <Link to="/login" className="nav-link">
-              Log In
-            </Link>
-            <Link to="/signup" className="btn btn-primary">
-              Create an Account
-            </Link>
-          </Nav>
+          {auth.fetched ? (
+            <Nav className="ml-auto">
+              <Link to="/logout" className="nav-link" onClick={logout}>
+                Log Out
+              </Link>
+            </Nav>
+          ) : (
+            <Nav className="ml-auto">
+              <Link to="/login" className="nav-link">
+                Log In
+              </Link>
+              <Link to="/signup" className="btn btn-primary">
+                Create an Account
+              </Link>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Navbar>
     </header>

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { createAction } from '@reduxjs/toolkit';
 
-import { 
+import {
   LocalUser,
   AuthError,
   UserCredentials,
@@ -20,6 +20,8 @@ export const getUserFailed = createAction<AuthError>('GET_USER_FAILED');
 export const loginUserPending = createAction('LOGIN_USER_PENDING');
 export const loginUserSuccess = createAction<LocalUser>('LOGIN_USER_SUCCESS');
 export const loginUserFailed = createAction<AuthError>('LOGIN_USER_FAILED');
+
+export const logoutUser = createAction('LOGOUT_USER');
 
 export const createUser = (
   formData: UserCredentials & { passwordConfirmation: string },
