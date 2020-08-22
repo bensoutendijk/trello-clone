@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
+import clsx from 'clsx';
 
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Form from 'react-bootstrap/Form';
@@ -35,6 +36,13 @@ function LogIn() {
   return (
     <div className="LogIn">
       <Jumbotron className="bg-dark text-light">
+        {auth?.error?.authentication ? (
+          <div className="alert alert-danger" role="alert">
+            {auth?.error?.authentication}
+          </div>
+        ) : (
+          null
+        )}
         <h1>Log In</h1>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
@@ -44,7 +52,15 @@ function LogIn() {
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
+              isInvalid={!!auth?.error?.email}
             />
+            {auth?.error?.email ? (
+              <Form.Text className="text-danger">
+                Email {auth.error.email}
+              </Form.Text>
+            ) : (
+              null
+            )}
           </Form.Group>
           <Form.Group>
             <Form.Label>Password</Form.Label>
@@ -52,7 +68,15 @@ function LogIn() {
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
+              isInvalid={!!auth?.error?.password}
             />
+            {auth?.error?.password ? (
+              <Form.Text className="text-danger">
+                Password {auth.error.password}
+              </Form.Text>
+            ) : (
+              null
+            )}
           </Form.Group>
           <Button variant="primary" type="submit">
             Log In

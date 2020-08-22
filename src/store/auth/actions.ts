@@ -55,6 +55,6 @@ export const login = (
     const { data } = await axios.post('/api/auth/local/login', formData);
     dispatch(loginUserSuccess(data));
   } catch (error) {
-    dispatch(loginUserFailed(error.message));
+    dispatch(loginUserFailed(error.response.data));
   }
 };
