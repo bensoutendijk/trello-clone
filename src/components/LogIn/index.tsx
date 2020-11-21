@@ -21,6 +21,8 @@ function LogIn() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     document.cookie = 'token=;';
+    document.cookie = 'httpOnlyToken=;';
+
     event.preventDefault();
     const user = {
       email,
