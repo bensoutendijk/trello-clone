@@ -20,6 +20,7 @@ function LogIn() {
   const [password, setPassword] = useState('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    document.cookie = 'token=;';
     event.preventDefault();
     const user = {
       email,
