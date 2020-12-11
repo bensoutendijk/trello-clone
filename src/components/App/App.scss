@@ -5,3 +5,16 @@
     flex-direction: column;
     background-color: #6c757d;
 }
+
+.AppLoading {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.AppLoading-text {
+    margin-top: 24px;
+}

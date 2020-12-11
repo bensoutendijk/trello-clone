@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchUser } from '../../store/auth/actions';
 
+import Loading from './Loading';
 import Header from '../Header';
 import Boards from '../Boards';
 import LogIn from '../LogIn';
@@ -28,7 +29,9 @@ function App() {
   }, [dispatch]);
 
   if (!ready) {
-    return null;
+    return (
+      <Loading />
+    );
   }
 
   return (
