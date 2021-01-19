@@ -10,6 +10,7 @@ import '../Cards/Cards.scss';
 import BoardList from './BoardList';
 import BoardView from './BoardView';
 import BoardNew from './BoardNew';
+import BoardSettings from './BoardSettings';
 
 function Boards() {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function Boards() {
 
   return (
     <div className="Boards">
+      <Route path="/boards/:boardid/settings" component={BoardSettings} />
       <Switch>
         <Route exact path="/boards" component={BoardList} />
         <Route exact path="/boards/new" component={BoardNew} />

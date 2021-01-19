@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import update from 'immutability-helper';
@@ -186,9 +186,13 @@ function BoardView() {
               size="lg"
               style={{ color: 'white', fontWeight: 700 }}
               onClick={() => setFormOpen(true)}
-              children={boards.form[board._id]!.title}
-            />
+            >
+              <span>{boards.form[board._id]!.title}</span>
+            </Button>
           )}
+          <Link to={`/boards/${board._id}/settings`} className="BoardEdit-btn btn btn-lg">
+            <i className="fal fa-cog"></i>
+          </Link>
         </Navbar>
         <Droppable droppableId={params.boardid} direction="horizontal" type="category">
           {(provided) => (
