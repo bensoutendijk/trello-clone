@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { createAction } from '@reduxjs/toolkit';
 
-import { 
+import {
   Board,
   BoardsError,
   BoardForm,
@@ -29,7 +29,7 @@ export const postBoardSuccess = createAction<Board>('POST_BOARD_SUCCESS');
 export const postBoardFailed = createAction<BoardsError>('POST_BOARD_FAILED');
 
 export const removeBoardPending = createAction('REMOVE_BOARD_PENDING');
-export const removeBoardSuccess = createAction<string>('REMOVE_BOARD_SUCCESS');
+export const removeBoardSuccess = createAction<Board>('REMOVE_BOARD_SUCCESS');
 export const removeBoardFailed = createAction<BoardsError>('REMOVE_BOARD_FAILED');
 
 export const updateBoardForm = createAction<BoardForm>('UPDATE_BOARD_FORM');

@@ -1,20 +1,20 @@
 import { createReducer, ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { mapToKey, getUniqueValues } from '../../utils';
 import { BoardsState } from './types';
-import { 
-  createBoardPending, 
-  createBoardSuccess, 
-  createBoardFailed, 
-  receiveBoards, 
-  rejectBoards, 
-  getBoardPending, 
-  getBoardSuccess, 
-  getBoardFailed, 
-  postBoardPending, 
-  postBoardSuccess, 
-  postBoardFailed, 
-  removeBoardPending, 
-  removeBoardSuccess, 
+import {
+  createBoardPending,
+  createBoardSuccess,
+  createBoardFailed,
+  receiveBoards,
+  rejectBoards,
+  getBoardPending,
+  getBoardSuccess,
+  getBoardFailed,
+  postBoardPending,
+  postBoardSuccess,
+  postBoardFailed,
+  removeBoardPending,
+  removeBoardSuccess,
   removeBoardFailed,
   updateBoardForm,
 } from './actions';
@@ -99,7 +99,7 @@ export default createReducer(initialState, (builder: ActionReducerMapBuilder<Boa
   builder
     .addCase(removeBoardSuccess, (state, action) => {
       state.fetching = false;
-      state.allIds = state.allIds.filter((id) => id !== action.payload);
+      state.allIds = state.allIds.filter((id) => id !== action.payload._id);
     });
   builder
     .addCase(removeBoardFailed, (state, action) => {
