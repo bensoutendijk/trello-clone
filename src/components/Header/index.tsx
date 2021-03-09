@@ -28,11 +28,15 @@ function Header() {
         </Link>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
-          <Nav className="mr-auto">
-            <Link to="/boards" className="nav-link">
+          {auth.fetched ? (
+            <Nav className="mr-auto">
+              <Link to="/boards" className="nav-link">
               Boards
-            </Link>
-          </Nav>
+              </Link>
+            </Nav>
+          ) : (
+            null
+          )}
           {auth.fetched ? (
             <Nav className="ml-auto">
               <Link to="/logout" className="nav-link" onClick={logout}>
