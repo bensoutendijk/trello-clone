@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-import { createUser } from '../../store/auth/actions';
+import { createUser, login } from '../../store/auth/actions';
 
 import './SignUp.scss';
 
@@ -29,6 +29,16 @@ function SignUp() {
     dispatch(createUser(user));
   };
 
+  const loginDemoUser = (event: React.MouseEvent): void => {
+    event.preventDefault();
+
+    const user = {
+      email: 'demo@soutendijk.org',
+      password: 'd!p#wT7w%OksA8sN5w',
+    };
+    dispatch(login(user));
+  };
+
   if (auth.fetched) return (
     <Redirect to="/"/>
   );
@@ -44,6 +54,9 @@ function SignUp() {
           null
         )}
         <h1>Sign Up</h1>
+        <div className="one-click-logins">
+          <button className="btn btn-primary" onClick={loginDemoUser}>Try the Demo</button>
+        </div>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label>Email address</Form.Label>

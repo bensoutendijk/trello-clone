@@ -31,6 +31,16 @@ function LogIn() {
     dispatch(login(user));
   };
 
+  const loginDemoUser = (event: React.MouseEvent): void => {
+    event.preventDefault();
+
+    const user = {
+      email: 'demo@soutendijk.org',
+      password: 'd!p#wT7w%OksA8sN5w',
+    };
+    dispatch(login(user));
+  };
+
   if (auth.fetched) return (
     <Redirect to="/"/>
   );
@@ -46,6 +56,9 @@ function LogIn() {
           null
         )}
         <h1>Log In</h1>
+        <div className="one-click-logins">
+          <button className="btn btn-primary" onClick={loginDemoUser}>Try the Demo</button>
+        </div>
         <Form onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
