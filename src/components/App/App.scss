@@ -18,3 +18,13 @@
 .AppLoading-text {
     margin-top: 24px;
 }
+
+.ViewSourceButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+}

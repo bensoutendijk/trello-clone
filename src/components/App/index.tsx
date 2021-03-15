@@ -12,6 +12,7 @@ import SignUp from '../SignUp';
 
 import './App.scss';
 import { RootState } from '../../store';
+import ViewSourceButton from './ViewSourceButton';
 
 function App() {
   const [ready, setReady] = useState(false);
@@ -50,6 +51,7 @@ function App() {
           <Redirect to="/login" />
         </Switch>
       )}
+      <ViewSourceButton />
     </div>
   );
 }
