@@ -18,6 +18,5 @@ COPY . .
 
 RUN yarn build
 
-CMD [ "npm", "run", "start" ]
 EXPOSE 3000
 
